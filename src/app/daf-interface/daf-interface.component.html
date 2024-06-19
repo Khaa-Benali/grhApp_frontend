@@ -1,0 +1,40 @@
+<div class="container">
+    <div class="card-header custom-header bg-primary text-white">
+        <h4 class="card-title">Consultation GRH</h4>
+    </div>
+    <div class="card">
+        <div class="card-photo">
+            <img src="assets/salaire.jpg" alt="Photo">
+        </div>
+        <div class="card-content">
+            <h3 class="card-title">Masse salariale</h3>
+            <p *ngIf="masseSalariale !== undefined">{{ masseSalariale | currency }}</p>
+        </div>
+    </div>
+    <table class="custom-table">
+        <thead>
+            <tr>
+                <th>ID Collaborateur</th>
+                <th>Nom complet</th>
+                <th>Poste</th>
+                <th>Type contrat</th>
+                <th>Ancienneté</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let collaborateur of collaborateurs">
+                <td>{{ collaborateur.idCollaborateur }}</td>
+                <td>{{ collaborateur.nomComplet }}</td>
+                <td>{{ collaborateur.poste }}</td>
+                <td>{{ collaborateur.typeContrat }}</td>
+                <td>{{ collaborateur.anciennete }}</td>
+                <td>
+                    <i class="fas fa-edit" style="cursor: pointer;"></i>
+                    <i class="fas fa-trash-alt" style="cursor: pointer;"></i>
+                    <i class="fas fa-file-pdf" style="cursor: pointer;"></i>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

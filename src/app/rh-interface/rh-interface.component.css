@@ -1,0 +1,14 @@
+.custom-header {
+    background-color: #3a4287;
+    color: #ffffff; /* Texte en blanc pour un meilleur contraste */
+}
+.custom-cancel-btn {
+    background-color: #ea7e11; /* Rouge */
+    color: #ffffff; /* Texte en blanc pour un meilleur contraste */
+    margin-right: 20px;
+}
+
+.custom-register-btn {
+    background-color: #3a4287; /* Bleu */
+    color: #ffffff; /* Texte en blanc pour un meilleur contraste */
+}

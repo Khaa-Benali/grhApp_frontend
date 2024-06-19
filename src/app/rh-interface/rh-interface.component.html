@@ -1,0 +1,264 @@
+<!DOCTYPE html>  
+<html>  
+<head>  
+    <title>Employee Registration</title>  
+    <meta charset="utf-8" />  
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">  
+</head>  
+<body>  
+    <div class="container py-5">  
+        <div class="row">  
+            <div class="offset-md-2 col-md-8 offset-md-2">  
+                <div class="card">  
+                    <div class="card-header custom-header text-white">  
+                        <h4 class="card-title">Consultation GRH > Nouveau Collaborateur</h4>  
+                    </div>  
+                    <div class="card-body">  
+                        <form #collabForm="ngForm" (ngSubmit)="onSubmit()">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-xs-12">
+                                    <div class="form-group">
+                                        <h5>Informations collaborateur</h5>
+                                        <hr>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">  
+                                <div class="col-sm-4 col-md-4 col-xs-12">  
+                                    <div class="form-group">  
+                                        <label for="cin">N° CIN</label>  
+                                        <input type="number" id="cin" placeholder="N° CIN" class="form-control" min="10000000" max="99999999" aria-describedby="inputGroupPrepend" name="cin" [(ngModel)]="collaborateur.cin" />
+                                        
+                                    </div>  
+                                </div>
+                                <div class="col-sm-4 col-md-4 col-xs-12">  
+                                    <div class="form-group">  
+                                        <label for="fullname">Nom Complet</label>  
+                                        <input type="text" id="fullname" placeholder="Nom Complet" class="form-control" aria-describedby="inputGroupPrepend" name="nomComplet" [(ngModel)]="collaborateur.nomComplet" />
+                                    </div>  
+                                </div>  
+                                <div class="col-sm-4 col-md-4 col-xs-12">
+                                    <div class="form-group">
+                                        <label for="accountNumber">N° du compte</label>
+                                        <input type="number" id="accountNumber" placeholder="N° du compte" class="form-control" min="1000000000000" max="9999999999999" aria-describedby="inputGroupPrepend" required name="numCompte" [(ngModel)]="collaborateur.numCompte"/>
+                                    </div>
+                                </div>
+                            </div>  
+                            <div class="row">  
+                                <div class="col-sm-4 col-md-4 col-xs-12">
+                                    <div class="form-group">
+                                        <label for="socialSecurityNumber">N° sécurité sociale</label>
+                                        <input type="number" id="socialSecurityNumber" placeholder="N° sécurité sociale" class="form-control" min="100000000000000" max="999999999999999" aria-describedby="inputGroupPrepend" required [(ngModel)]="collaborateur.numSecurite" name="numSecurite"/>
+                                        <div class="invalid-feedback">Le N° sécurité sociale doit contenir exactement 15 chiffres</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 col-md-4 col-xs-12">  
+                                    <div class="form-group">  
+                                        <label for="phoneNumber">N° Téléphone</label>  
+                                        <input type="tel" id="phoneNumber" placeholder="N° Téléphone" class="form-control" aria-describedby="inputGroupPrepend" required [(ngModel)]="collaborateur.tel" name="tel"/>  
+                                        <div class="invalid-feedback">Please enter N° Téléphone</div>  
+                                    </div>  
+                                </div>  
+                                <div class="col-sm-4 col-md-4 col-xs-12">  
+                                    <div class="form-group">  
+                                        <label for="birthdate">Date de naissance</label>  
+                                        <input type="date" id="birthdate" class="form-control" aria-describedby="inputGroupPrepend" required [(ngModel)]="collaborateur.dateNaiss" name="dateNaiss"/>  
+                                        <div class="invalid-feedback">Please enter Date de naissance</div>  
+                                    </div>  
+                                </div>  
+                            </div>  
+                            <div class="row">  
+                                <div class="col-sm-4 col-md-4 col-xs-12">  
+                                    <div class="form-group">  
+                                        <label for="cin">Adresse</label>  
+                                        <input type="text" id="adresse" placeholder="Adresse" class="form-control" aria-describedby="inputGroupPrepend" required [(ngModel)]="collaborateur.adresse" name="adresse"/>  
+                                        <div class="invalid-feedback">Please enter your Address</div>  
+                                    </div>  
+                                </div>  
+                                <div class="col-sm-4 col-md-4 col-xs-12">  
+                                    <div class="form-group">  
+                                        <label for="amail">Email</label>  
+                                        <input type="email" id="email" placeholder="Email" class="form-control" aria-describedby="inputGroupPrepend" required [(ngModel)]="collaborateur.email" name="email"/>  
+                                        <div class="invalid-feedback">Please enter your email</div>  
+                                    </div>  
+                                </div>  
+                            </div>  
+
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-xs-12">
+                                        <div class="form-group">
+                                            <h5>Qualifications</h5>
+                                            <hr>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4 col-md-4 col-xs-12">
+                                        <div class="form-group">
+                                            <label for="natureEtudes">Nature d’études</label>
+                                            <select class="custom-select" id="natureEtudes" required [(ngModel)]="collaborateur.qualification.natureEtude" name="natureEtudes">
+                                                <option [ngValue]="">Sélectionner</option>
+                                                <option [ngValue]="'Bac'">Bac</option>
+                                                <option [ngValue]="'Bac+2'">Bac+2</option>
+                                                <option [ngValue]="'Bac+3'">Bac+3</option>
+                                                <!-- Ajoutez d'autres options selon vos besoins -->
+                                            </select>                                            
+                                            <div class="invalid-feedback">Veuillez sélectionner la nature d’études</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 col-md-4 col-xs-12">
+                                        <div class="form-group">
+                                            <label for="niveauEtudes">Niveau d’études</label>
+                                            <select class="custom-select" id="niveauEtudes" required [(ngModel)]="collaborateur.qualification.niveauEtudes" name="niveauEtudes">
+                                                <option [ngValue]="">Sélectionner</option>
+                                                <option [ngValue]="'Débutant'">Débutant</option>
+                                                <option [ngValue]="'Intermédiaire'">Intermédiaire</option>
+                                                <option [ngValue]="'Avancé'">Avancé</option>
+                                                <!-- Ajoutez d'autres options selon vos besoins -->
+                                            </select>
+                                            <div class="invalid-feedback">Veuillez sélectionner le niveau d’études</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 col-md-4 col-xs-12">
+                                        <div class="form-group">
+                                            <label for="certifications">Certifications</label>
+                                            <input type="text" id="certifications" class="form-control" aria-describedby="inputGroupPrepend" required [(ngModel)]="collaborateur.qualification.certification" name="certification"/>
+                                            <div class="invalid-feedback">Veuillez saisir les certifications</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 col-md-4 col-xs-12">
+                                        <div class="form-group">
+                                            <label for="experienceYear">Année d’expérience</label>
+                                            <input type="number" id="experienceYear" placeholder="Année d’expérience" class="form-control" aria-describedby="inputGroupPrepend" required [(ngModel)]="collaborateur.qualification.anneeExperience" name="anneeExperience" />
+                                            <div class="invalid-feedback">Veuillez saisir l'année d’expérience</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-xs-12">
+                                        <div class="form-group">
+                                            <h5>Contrat</h5>
+                                            <hr>
+                                        </div>
+                                    </div>
+                                </div>
+                            <div class="row">  
+                                <div class="col-sm-4 col-md-4 col-xs-12">  
+                                    <div class="form-group">  
+                                        <label for="contractType">Type contrat</label>  
+                                        <select class="custom-select" id="contractType"  name="typeContrat" ngModel required [(ngModel)]="collaborateur.contrat.typeContrat" name="typeContrat">  
+                                            <option [ngValue]="">Select Type contrat</option>  
+                                            <option [ngValue]="'CDI'">CDI</option>  
+                                            <option [ngValue]="'CIVP'">CIVP</option>  
+                                            <option [ngValue]="'CVP'">CVP</option>  
+                                        </select>  
+                                        <div class="invalid-feedback">Please select Type contrat</div>  
+                                    </div>  
+                                </div>   
+                                <div class="col-sm-4 col-md-4 col-xs-12">  
+                                    <div class="form-group">  
+                                        <label for="baseSalary">Salaire de base</label>  
+                                        <input type="number" id="baseSalary" placeholder="Salaire de base" class="form-control" aria-describedby="inputGroupPrepend" required [(ngModel)]="collaborateur.contrat.baseSalary" name="baseSalary"/>  
+                                        <div class="invalid-feedback">Please enter Salaire de base</div>  
+                                    </div>  
+                                </div>  
+                                <div class="col-sm-4 col-md-4 col-xs-12">  
+                                    <div class="form-group">  
+                                        <label for="contractStartDate">Date début contrat</label>  
+                                        <input type="date" id="contractStartDate" class="form-control" aria-describedby="inputGroupPrepend" required [(ngModel)]="collaborateur.contrat.dateD" name="dateD" />  
+                                        <div class="invalid-feedback">Please enter Date début contrat</div>  
+                                    </div>  
+                                </div>  
+                            </div>  
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-xs-12">
+                                        <div class="form-group">
+                                            <h5>
+                                                Grade</h5>
+                                            <hr>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                <div class="col-sm-4 col-md-4 col-xs-12">  
+                                    <div class="form-group">  
+                                        <label for="department"> Département</label>  
+                                        <select class="custom-select" id="department" required [(ngModel)]="collaborateur.grade.departement.nom"  name="department"  >  
+                                            <option [ngValue]=""> Select Département</option>  
+                                            <option [ngValue]="'informatique'">informatique</option>  
+                                            <option [ngValue]="'R&D'">R&D</option>  
+                                        </select>  
+                                        <div class="invalid-feedback">Please select Département</div>  
+                                    </div>  
+                                </div>  
+                                <div class="col-sm-4 col-md-4 col-xs-12">  
+                                    <div class="form-group">  
+                                        <label for="position">Poste</label>  
+                                        <select class="custom-select" id="position" required [(ngModel)]="collaborateur.grade.poste.nom" name="Poste" >  
+                                            <option [ngValue]="">Select Poste</option>  
+                                            <option [ngValue]="'ingénieur'">ingénieur</option>  
+                                            <option [ngValue]="'chef de projet'">chef de projet</option>   
+                                        </select>  
+                                        <div class="invalid-feedback">Please select Poste</div>  
+                                    </div>  
+                                </div>  
+                            </div>  
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-xs-12">
+                                    <div class="form-group">
+                                        <h5>Pièces jointes</h5>
+                                        <hr>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-xs-12">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Pièces jointes</th>
+                                                    <th>Obligatoire</th>
+                                                    <th>Statut</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let piece of piecesParTypeContrat[collaborateur.contrat.typeContrat]">
+                                                    <td>{{ piece }}</td>
+                                                    <td>oui</td>
+                                                    <td>N/A</td>
+                                                    <td><input type="checkbox"></td>
+                                                </tr>
+                                                <!-- Ajoutez d'autres lignes selon vos besoins -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-xs-12">
+                                <div class="form-group">
+                                    <label for="attachments">Pièces jointes</label>
+                                    <input type="file" id="attachments" class="form-control-file" aria-describedby="inputGroupPrepend" required accept=".pdf,.doc,.docx" />
+                                    <small id="inputGroupPrepend" class="text-muted">Veuillez télécharger des fichiers au format PDF, DOC ou DOCX. Taille maximale : 4 MB.</small>
+                                    <div class="invalid-feedback">Veuillez joindre une pièce jointe</div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">  
+                                <div class="col-sm-12 col-md-12 col-xs-12">  
+                                    <div class="float-right">  
+                                        <button class="btn btn-danger rounded-0 custom-cancel-btn" type="button" id="btn_cancel">Cancel</button>
+                                        <button class="btn btn-primary rounded-0 custom-register-btn" id="btn_register" type="submit">Register</button>
+
+                                    </div>                            
+                                </div>  
+                            </div>  
+                        </form>  
+                    </div>  
+                </div>  
+            </div>  
+        </div>  
+    </div> 
+</body>  
+</html>
