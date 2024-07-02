@@ -1,0 +1,77 @@
+pipeline {
+    agent any
+
+    tools {
+        nodejs "NODEJS"
+    }
+
+    environment {
+        GIT_CREDENTIALS = credentials('idgithubkhaa')
+    }
+
+    stages {
+        stage('Clone Angular') {
+            steps {
+                git branch: 'main', credentialsId: GIT_CREDENTIALS, url: 'https://github.com/Khaa-Benali/grhApp_frontend.git'
+            }
+        }
+       
+        stage('Build Angular') {
+            steps {
+               
+                    script {
+                        sh 'npm install'
+                        sh 'npm run build --prod'
+                    }
+            }
+        }
+        stage('Publish to Nexus Repository Manager') {
+            steps {
+                sh 'zip -r dist.zip dist'
+                nexusArtifactUploader artifacts: [[artifactId: "grhfront", classifier: '', file: "dist.zip ", type: 'zip']], credentialsId: 'nexusID', groupId: 'gti.grh', nexusUrl: 'localhost:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'grhfront', version: '0.0.0'
+             
+         
+            }
+        }
+       
+        stage('Run SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv(installationName: 'sonarqube', credentialsId: 'jenkins-sonar') {
+                        sh '''
+                            sonar-scanner \
+                            -Dsonar.projectKey=grhAppSonarqube \
+                            -Dsonar.sources=src \
+                            -Dsonar.host.url=http://localhost:9000
+                           
+                        '''
+                    }
+            }
+    }
+       
+        stage('Build Docker Image') {
+            steps {
+                script {
+                     sh 'docker build -t khadijabenali/frontdockerimage:tag6 .'
+                }
+            }
+        }
+        stage('docker login') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'DOCKERHUB_PASSWORD', usernameVariable: 'DOCKERHUB_USERNAME')]) {
+                     sh "docker logout"
+                     sh "echo ${DOCKERHUB_PASSWORD} | docker login -u ${DOCKERHUB_USERNAME} --password-stdin "
+                }
+                }
+            }
+        }
+        stage('push Docker Image') {
+            steps {
+                script {
+                     sh 'docker push khadijabenali/frontdockerimage:tag6'
+                }
+            }
+        }    
+       
+    }
+}
